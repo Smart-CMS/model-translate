@@ -1,0 +1,80 @@
+{
+    "name": "smart-cms/model-translate",
+    "description": "This is my package model-translate",
+    "keywords": [
+        "SmartCms",
+        "laravel",
+        "filamentphp",
+        "model-translate"
+    ],
+    "homepage": "https://github.com/smart-cms/model-translate",
+    "support": {
+        "issues": "https://github.com/smart-cms/model-translate/issues",
+        "source": "https://github.com/smart-cms/model-translate"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "maxboyko",
+            "email": "maxboiko@divotek.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "filament/filament": "^4.0",
+        "spatie/laravel-package-tools": "^1.15.0",
+        "smart-cms/lang": "^1.0"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^8.0",
+        "orchestra/testbench": "^9.0|^10.0",
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-arch": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "pestphp/pest-plugin-livewire": "^3.0",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SmartCms\\ModelTranslate\\": "src/",
+            "SmartCms\\ModelTranslate\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SmartCms\\ModelTranslate\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "analyse": "phpstan analyse",
+        "lint": "pint",
+        "test": "pest",
+        "test:lint": "pint --test"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SmartCms\\ModelTranslate\\ModelTranslateServiceProvider"
+            ],
+            "aliases": {
+                "ModelTranslate": "SmartCms\\ModelTranslate\\Facades\\ModelTranslate"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
