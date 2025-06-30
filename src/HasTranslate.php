@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartCms\ModelTranslate\Traits;
+namespace SmartCms\ModelTranslate;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Cache;
