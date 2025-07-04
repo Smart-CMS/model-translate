@@ -5,7 +5,7 @@ namespace SmartCms\ModelTranslate\Admin;
 use Filament\Actions\Action;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Form;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\Width;
 use SmartCms\ModelTranslate\Models\Translate;
 
@@ -14,8 +14,8 @@ class TranslateAction
     public static function make(string $name = 'translate'): Action
     {
         return Action::make($name)
-            ->hidden(function () {
-                return app('lang')->adminLanguages()->count() <= 1;
+            ->hidden(function (string $operation) {
+                return app('lang')->adminLanguages()->count() <= 1 || $operation == 'create';
             })
             ->modalWidth(Width::TwoExtraLarge)
             ->badge(function ($record) {
@@ -30,20 +30,18 @@ class TranslateAction
             })
             ->icon(function (): string {
                 return 'heroicon-o-language';
-            })->schema(function (Form $form, Action $action) {
+            })->schema(function (Schema $form, Action $action) {
                 if ($action->isHidden()) {
                     return [];
                 }
-                $fields = [];
-                $languages = get_active_languages();
-                foreach ($languages as $language) {
-                    $fields[] = TextInput::make($language->slug . '.name')->label(__('core::admin.name') . ' (' . $language->name . ')');
-                }
+                return app('lang')->adminLanguages()->map(function ($lang) {
+                    return TextInput::make($lang->slug . '.name')->label(__('core::admin.name') . ' (' . $lang->name . ')');
+                })->toArray();
 
                 return $form->schema($fields);
             })->fillForm(function ($record) {
                 $translates = [];
-                $languages = get_active_languages();
+                $languages = app('lang')->adminLanguages();
                 foreach ($languages as $language) {
                     $translates[$language->slug] = [
                         'name' => $record->translatable()->where('language_id', $language->id)->first()->value ?? '',
@@ -52,7 +50,7 @@ class TranslateAction
 
                 return $translates;
             })->action(function ($record, $data) {
-                foreach (get_active_languages() as $lang) {
+                foreach (app('lang')->adminLanguages() as $lang) {
                     $name = $data[$lang->slug]['name'] ?? '';
                     if ($name == '') {
                         Translate::query()->where([
