@@ -34,6 +34,7 @@ class TranslateAction
                 if ($action->isHidden()) {
                     return [];
                 }
+
                 return app('lang')->adminLanguages()->map(function ($lang) {
                     return TextInput::make($lang->slug . '.name')->label(__('core::admin.name') . ' (' . $lang->name . ')');
                 })->toArray();
