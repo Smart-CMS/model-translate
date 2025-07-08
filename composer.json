@@ -52,7 +52,7 @@
     },
     "scripts": {
         "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
-        "analyse": "phpstan analyse",
+        "analyse": "phpstan analyse --memory-limit 1G -c phpstan.neon.dist ",
         "lint": "pint",
         "test": "pest",
         "test:lint": "pint --test"

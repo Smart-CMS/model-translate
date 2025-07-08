@@ -38,8 +38,6 @@ class TranslateAction
                 return app('lang')->adminLanguages()->map(function ($lang) {
                     return TextInput::make($lang->slug . '.name')->label(__('core::admin.name') . ' (' . $lang->name . ')');
                 })->toArray();
-
-                return $form->schema($fields);
             })->fillForm(function ($record) {
                 $translates = [];
                 $languages = app('lang')->adminLanguages();

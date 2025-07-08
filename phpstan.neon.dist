@@ -10,5 +10,5 @@ parameters:
     tmpDir: build/phpstan
     checkOctaneCompatibility: true
     checkModelProperties: true
-    unused: false
-
+    ignoreErrors:
+        - '#Trait SmartCms\\ModelTranslate\\HasTranslate is used zero times and is not analysed#'
